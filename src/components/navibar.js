@@ -11,9 +11,10 @@ export default function Navibar() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                        <Link className="mr-2" to="/">На главную</Link>
-                        <Link className="mr-2" to="/news">Новости</Link>
-                        <Link className="mr-2" to="/profile">Профиль</Link>
+                        <Link className="mr-3" to="/">На главную</Link>
+                        <Link className="mr-3" to="/news">Новости</Link>
+                        <Link className="mr-3" to="/profile">Профиль</Link>
+                        <Link className="mr-3" to="/login">LOG IN</Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

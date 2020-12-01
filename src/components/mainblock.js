@@ -8,19 +8,22 @@ import News from './News';
 import Profile from './Profile';
 
 
-export default function Mainblock() {
+export default class Mainblock extends React.Component {
 
-    return (
-        <>
-            <Router>
-                <Navibar />
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route path="/news" component={News} />
-                    <Route path="/profile" component={Profile} />
-                    <Login />
-                </Switch>
-            </Router>
-        </>
-    );
+
+    render() {
+        return (
+            <>
+                <Router>
+                    <Navibar />
+                    <Switch>
+                        <Route exact path="/" component={Home} />
+                        <Route path="/news" component={News} />
+                        <Route path="/profile" component={Profile} />
+                        <Route path="/login" component={Login} />
+                    </Switch>
+                </Router>
+            </>
+        );
+    }
 }
