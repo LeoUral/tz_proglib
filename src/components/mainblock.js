@@ -1,10 +1,10 @@
 import React from 'react';
 import Switch from 'react-bootstrap/esm/Switch';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Home from './Home';
+import Home from './home';
 import Login from './Login';
-import Navibar from './Navibar';
-import News from './News';
+import Navibar from './navibar';
+import News from './news';
 import Profile from './Profile';
 
 
