@@ -18,7 +18,9 @@ export default class Profile extends React.Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(this.dataSend)
-        });
+        })
+        this.dataPost = await this.response.json();// ждем окончание асинхронного запроса
+        console.log(this.dataPost.data.id); //полученные данные ID с сервера
     }
 
     componentDidMount() {
@@ -26,9 +28,10 @@ export default class Profile extends React.Component {
             document.location.href = '/login';
         } else {
             this.getResponse();
-            setTimeout(() => {
-                console.log(this.response.json());
-            }, 500);
+            // setTimeout(() => {
+            // let dataPost = await this.response.json();
+            // console.log(this.dataPost);
+            // }, 500);
         }
 
 
