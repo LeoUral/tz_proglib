@@ -2,16 +2,41 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 
 export default class Profile extends React.Component {
+    constructor(props) {
+        super(props);
+        this.dataSend = {
+            email: 'max@test.com',
+            password: '12345'
+        };
+    }
+
+
+    async getResponse() {
+        this.response = await fetch('https://mysterious-reef-29460.herokuapp.com/api/v1/validate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.dataSend)
+        });
+    }
 
     componentDidMount() {
         if (localStorage.getItem('verification') === 'false') {
             document.location.href = '/login';
+        } else {
+            this.getResponse();
+            setTimeout(() => {
+                console.log(this.response.json());
+            }, 500);
         }
+
+
     }
 
-    componentWillUnmount() {
-        localStorage.setItem('verification', false);
-    }
+    // componentWillUnmount() {
+    //     localStorage.setItem('verification', false);
+    // }
 
     render() {
         return (
