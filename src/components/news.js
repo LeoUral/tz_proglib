@@ -17,7 +17,6 @@ export default class News extends React.Component {
         this.setState({ renderData: this.dataNews.data });
     };
 
-
     componentDidMount() {
         this.getNews();
     }
