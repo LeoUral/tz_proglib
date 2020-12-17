@@ -10,8 +10,8 @@ export default class Profile extends React.Component {
         };
     }
 
-
-    async getResponse() {
+    // получение ID пользователя, по вводу email и password
+    async postResponse() {
         this.response = await fetch('https://mysterious-reef-29460.herokuapp.com/api/v1/validate', {
             method: 'POST',
             headers: {
@@ -21,17 +21,21 @@ export default class Profile extends React.Component {
         })
         this.dataPost = await this.response.json();// ждем окончание асинхронного запроса
         console.log(this.dataPost.data.id); //полученные данные ID с сервера
+    };
+    //получение данных по ID пользоветеля
+    async getResponse() {
+        this.response = await fetch('https://mysterious-reef-29460.herokuapp.com/api/v1/user-info/1');
+        this.dataGet = await this.response.json();
+        console.log(this.dataGet.data.city);
     }
 
     componentDidMount() {
         if (localStorage.getItem('verification') === 'false') {
             document.location.href = '/login';
         } else {
+            this.postResponse();
             this.getResponse();
-            // setTimeout(() => {
-            // let dataPost = await this.response.json();
-            // console.log(this.dataPost);
-            // }, 500);
+
         }
 
 
