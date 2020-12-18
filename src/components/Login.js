@@ -5,44 +5,69 @@ export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            login: 'Admin',
-            password: '12345',
-            valueLogin: '',
-            valuePassword: '',
-            verification: false
-        }
+            verification: false,
+            dataPost: ''
+        };
+        this.dataSend = {
+            email: '',
+            password: ''
+        };
+        // body POST-запроса
+        //email: 'max@test.com',
+        // password: '12345'
+
         this.handleChangeLogin = this.handleChangeLogin.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.verification = this.verification.bind(this);
+        this.postResponse = this.postResponse.bind(this);
     }
 
-    handleChangeLogin(event) {
-        this.setState({ valueLogin: event.target.value });
-    }
+    // получение ID пользователя, по вводу email и password
+    async postResponse() {
+        this.response = await fetch('https://mysterious-reef-29460.herokuapp.com/api/v1/validate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.dataSend)
+        })
+        this.setState({ dataPost: await this.response.json() }); //ждем окончание асинхронного запроса
+        console.log(this.state.dataPost.status); //полученные данные STATUS с сервера
 
-    handleChangePassword(event) {
-        this.setState({ valuePassword: event.target.value });
-    }
+        this.verification(this.state.dataPost.status);
+    };
 
-    handleSubmit(event) {
-        const login = this.state.login;
-        const password = this.state.password;
+    verification(dataVerification) {
 
-        if (login === this.state.valueLogin && password === this.state.valuePassword) {
+        if (dataVerification === 'ok') {
+            console.log('OK');
             this.setState({ verification: true });
             setTimeout(() => {
                 localStorage.setItem('verification', this.state.verification);
+                //оставлю включение страницы profil через localStorage
                 document.location.href = '/profile';
             }, 500);
-
         } else {
+            console.log('NOT OK');
             this.setState({ verification: false })
             setTimeout(() => {
                 localStorage.setItem('verification', this.state.verification);
             }, 500);
             alert('Логин или пароль введены не верно!');
         }
+    }
 
+    handleChangeLogin(event) {
+        this.dataSend.email = event.target.value;
+    }
+
+    handleChangePassword(event) {
+        this.dataSend.password = event.target.value;
+    }
+
+    handleSubmit(event) {
+        this.postResponse();
         event.preventDefault();
     }
 
@@ -54,7 +79,7 @@ export default class Login extends React.Component {
                     <Form onSubmit={this.handleSubmit} >
                         <Form.Group controlId="formBasicLogin">
                             <Form.Label>Login Name</Form.Label>
-                            <Form.Control type="text" placeholder="Enter Login" onChange={this.handleChangeLogin} />
+                            <Form.Control type="email" placeholder="Enter email" onChange={this.handleChangeLogin} />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
