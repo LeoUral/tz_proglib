@@ -1,8 +1,8 @@
 import LOG_IN from '../action/logIn';
 
-export default function logIner() {
+export default function logIner(action) {
     return {
         type: LOG_IN,
-        btnLog: 'Log Out'
+        btnLog: action
     };
 }

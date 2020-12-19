@@ -17,7 +17,7 @@ export default class Navibar extends React.Component {
             document.location.href = '/login';
         }
         if (localStorage.getItem('verification') === 'true') {
-            store.dispatch(logOut()); // ! меняем store при выходе на LogIn
+            store.dispatch(logOut('Log In')); // ! меняем store при выходе на LogIn
             localStorage.setItem('verification', false);
             document.location.href = '/';
         }

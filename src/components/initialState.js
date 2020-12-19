@@ -1,5 +1,5 @@
 const initialState = {
-    btnLog: 'Log In'
+    btnLog: 'Log In...'
 };
 
 export default initialState;

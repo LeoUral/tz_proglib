@@ -30,7 +30,7 @@ export default class Profile extends React.Component {
         if (localStorage.getItem('verification') === 'false') {
             document.location.href = '/login';
         } else {
-            store.dispatch(logIner()); // ! меняем store на LogOut при входе
+            store.dispatch(logIner('Log Out')); // ! меняем store на LogOut при входе
             this.getResponse();
         }
     }

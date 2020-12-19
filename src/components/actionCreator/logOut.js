@@ -1,8 +1,8 @@
 import LOG_OUT from '../action/logIn';
 
-export default function logOut() {
+export default function logOut(action) {
     return {
         type: LOG_OUT,
-        btnLog: 'Log In'
+        btnLog: action
     };
 }
