@@ -1,11 +1,15 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import logIner from './actionCreator/logIner';
+import store from './store';
 
 export default class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataUser: []
+            dataUser: [],
+            dataLanguages: [],
+            dataSocial: []
         }
     }
 
@@ -17,26 +21,46 @@ export default class Profile extends React.Component {
         console.log(this.dataGet);
         console.log(this.dataGet.data);
         this.setState({ dataUser: this.dataGet.data });
+        this.setState({ dataLanguages: this.dataGet.data.languages });
+        this.setState({ dataSocial: this.dataGet.data.social[0] });
+        console.log(this.state.dataUser);
     }
 
     componentDidMount() {
         if (localStorage.getItem('verification') === 'false') {
             document.location.href = '/login';
         } else {
+            store.dispatch(logIner()); // ! меняем store на LogOut при входе
             this.getResponse();
-
         }
-
-
     }
 
     render() {
+        const data = this.state.dataUser;
+        const languages = this.state.dataLanguages;
+        const social = this.state.dataSocial;
+
+
         return (
             <>
                 <Container>
                     <h1>Страница ПРОФИЛЬ</h1>
                     <h5>Доступ на эту страницу ограничен паролем!!!</h5>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Pariatur fugit esse, sit iusto ipsa laboriosam dolorem, possimus deleniti, ipsam eum doloremque assumenda. Consequuntur quaerat ipsa veritatis vel tenetur corrupti error quia tempora. Enim cum sint aperiam quam dolores maxime sequi mollitia debitis vero, repellat harum quibusdam porro non placeat quod magnam nihil! Deleniti nesciunt tempore iure recusandae illo numquam. Iure exercitationem deleniti sit minima quam totam unde autem praesentium deserunt.</p>
+                    <div>
+                        <span>City: </span>
+                        <span>{data.city}</span>
+                    </div>
+                    <div>
+                        <span>Languages: </span>
+                        <span>{languages[0]}</span>
+                        <span>{' '}</span>
+                        <span>{languages[1]}</span>
+                    </div>
+                    <div>
+                        <span>{social.label}</span>
+                        <sapn>{' '}</sapn>
+                        <a href={social.link}>{social.link}</a>
+                    </div>
                 </Container>
             </>
         );

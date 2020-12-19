@@ -1,6 +1,8 @@
 import React from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 
+
+
 export default class Login extends React.Component {
     constructor(props) {
         super(props);
@@ -33,6 +35,7 @@ export default class Login extends React.Component {
             body: JSON.stringify(this.dataSend)
         })
         this.setState({ dataPost: await this.response.json() }); //ждем окончание асинхронного запроса
+        console.log(this.state.dataPost.data.id); // ! полученный ID с сервера
         console.log(this.state.dataPost.status); //полученные данные STATUS с сервера
 
         this.verification(this.state.dataPost.status);
@@ -43,10 +46,12 @@ export default class Login extends React.Component {
         if (dataVerification === 'ok') {
             console.log('OK');
             this.setState({ verification: true });
+
             setTimeout(() => {
                 localStorage.setItem('verification', this.state.verification);
-                //оставлю включение страницы profil через localStorage
+                //оставлю включение страницы profil через localStorage                
                 document.location.href = '/profile';
+
             }, 500);
         } else {
             console.log('NOT OK');

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Nav, Navbar, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import store from './store';
+import logOut from './actionCreator/logOut';
 
 export default class Navibar extends React.Component {
     constructor(props) {
@@ -8,23 +10,21 @@ export default class Navibar extends React.Component {
 
         this.handleClick = this.handleClick.bind(this);
 
-        this.state = {
-            textBtn: 'Log In'
-        }
     }
 
     handleClick() {
         if (localStorage.getItem('verification') === 'false') {
-            this.setState({ textBtn: 'Log In' })
             document.location.href = '/login';
         }
         if (localStorage.getItem('verification') === 'true') {
-            this.setState({ textBtn: 'Log Out' });
+            store.dispatch(logOut()); // ! меняем store при выходе на LogIn
             localStorage.setItem('verification', false);
+            document.location.href = '/';
         }
     }
 
     render() {
+
 
         return (
             <>
@@ -38,7 +38,7 @@ export default class Navibar extends React.Component {
                             <Link className="mr-3" to="/profile">Профиль</Link>
                         </Nav>
                         <Nav >
-                            <Button variant="primary" className="mr-3" onClick={this.handleClick} >{this.state.textBtn}</Button>
+                            <Button variant="primary" className="mr-3" onClick={this.handleClick} >{this.props.btn}</Button>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

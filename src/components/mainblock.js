@@ -6,16 +6,38 @@ import Login from './Login';
 import Navibar from './navibar';
 import News from './news';
 import Profile from './Profile';
+import store from './store';
+
 
 
 export default class Mainblock extends React.Component {
+    constructor(props) {
+        super(props);
 
+        this.state = {
+            textBtn: ''
+        }
+    }
+
+    componentDidMount() {
+        this.setState({
+            textBtn: store.getState().btnLog
+        })
+    }
 
     render() {
+
+        store.subscribe(() => {
+            this.setState({
+                textBtn: store.getState().btnLog
+            });
+        })
+
+
         return (
             <>
                 <Router>
-                    <Navibar />
+                    <Navibar btn={this.state.textBtn} />
                     <Switch>
                         <Route exact path="/" component={Home} />
                         <Route path="/news" component={News} />
