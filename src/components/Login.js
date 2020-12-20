@@ -1,5 +1,9 @@
 import React from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
+import idUser from './actionCreator/idUserAction';
+// import logOut from './actionCreator/logOut';
+import logIner from './actionCreator/logIner';
+import store from './store';
 
 
 
@@ -35,26 +39,31 @@ export default class Login extends React.Component {
             body: JSON.stringify(this.dataSend)
         })
         this.setState({ dataPost: await this.response.json() }); //ждем окончание асинхронного запроса
-        console.log(this.state.dataPost.data.id); // ! полученный ID с сервера
-        console.log(this.state.dataPost.status); //полученные данные STATUS с сервера
 
+        const dataId = this.state.dataPost;
+        store.dispatch(idUser(dataId.data.id));// * передаем полученный ID в хранилище
+        console.log(this.state.dataPost.data.id); // TODO полученный ID с сервера
+        console.log(store.getState());
+
+        console.log(this.state.dataPost.status); // * полученные данные STATUS с сервера
         this.verification(this.state.dataPost.status);
     };
 
     verification(dataVerification) {
 
         if (dataVerification === 'ok') {
-            console.log('OK');
             this.setState({ verification: true });
+
+            store.dispatch(logIner('Log Out'));
 
             setTimeout(() => {
                 localStorage.setItem('verification', this.state.verification);
                 //оставлю включение страницы profil через localStorage                
-                document.location.href = '/profile';
+                // document.location.href = '/profile'; // ! при переходе обнуляет state
 
             }, 500);
         } else {
-            console.log('NOT OK');
+
             this.setState({ verification: false })
             setTimeout(() => {
                 localStorage.setItem('verification', this.state.verification);

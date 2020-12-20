@@ -13,16 +13,17 @@ export default class Profile extends React.Component {
         }
     }
 
-
     //получение данных по ID пользоветеля
-    async getResponse() {
-        this.response = await fetch('https://mysterious-reef-29460.herokuapp.com/api/v1/user-info/1');
+    async getResponse(numId) {
+        this.response = await fetch(`https://mysterious-reef-29460.herokuapp.com/api/v1/user-info/${numId}`);
         this.dataGet = await this.response.json();
         console.log(this.dataGet);
-        console.log(this.dataGet.data);
-        this.setState({ dataUser: this.dataGet.data });
-        this.setState({ dataLanguages: this.dataGet.data.languages });
-        this.setState({ dataSocial: this.dataGet.data.social[0] });
+
+        this.setState({
+            dataUser: this.dataGet.data,
+            dataLanguages: this.dataGet.data.languages,
+            dataSocial: this.dataGet.data.social[0]
+        });
         console.log(this.state.dataUser);
     }
 
@@ -31,15 +32,17 @@ export default class Profile extends React.Component {
             document.location.href = '/login';
         } else {
             store.dispatch(logIner('Log Out')); // ! меняем store на LogOut при входе
-            this.getResponse();
+
+            this.getResponse(store.getState().idUser); // * запрос на сервер с полученным ID
+
         }
     }
 
     render() {
+
         const data = this.state.dataUser;
         const languages = this.state.dataLanguages;
         const social = this.state.dataSocial;
-
 
         return (
             <>
@@ -47,18 +50,16 @@ export default class Profile extends React.Component {
                     <h1>Страница ПРОФИЛЬ</h1>
                     <h5>Доступ на эту страницу ограничен паролем!!!</h5>
                     <div>
-                        <span>City: </span>
-                        <span>{data.city}</span>
+                        <div>City: </div>
+                        <div>{data.city}</div>
                     </div>
                     <div>
-                        <span>Languages: </span>
-                        <span>{languages[0]}</span>
-                        <span>{' '}</span>
-                        <span>{languages[1]}</span>
+                        <div>Languages: </div>
+                        <div>{languages[0]}</div>
+                        <div>{languages[1]}</div>
                     </div>
                     <div>
-                        <span>{social.label}</span>
-                        <sapn>{' '}</sapn>
+                        <div>{social.label}</div>
                         <a href={social.link}>{social.link}</a>
                     </div>
                 </Container>
