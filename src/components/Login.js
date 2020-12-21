@@ -59,8 +59,7 @@ export default class Login extends React.Component {
             setTimeout(() => {
                 localStorage.setItem('verification', this.state.verification);
                 //оставлю включение страницы profil через localStorage                
-                // document.location.href = '/profile'; // ! при переходе обнуляет state
-
+                // document.location.href = '/profile'; // ! при переходе обнуляет state               
             }, 500);
         } else {
 
@@ -90,7 +89,7 @@ export default class Login extends React.Component {
             <>
                 <Container>
                     <h3>Введите данные для входа</h3>
-                    <Form onSubmit={this.handleSubmit} >
+                    <Form onSubmit={this.handleSubmit}>
                         <Form.Group controlId="formBasicLogin">
                             <Form.Label>Login Name</Form.Label>
                             <Form.Control type="email" placeholder="Enter email" onChange={this.handleChangeLogin} />
