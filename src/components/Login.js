@@ -42,7 +42,7 @@ export default class Login extends React.Component {
 
         const dataId = this.state.dataPost;
         store.dispatch(idUser(dataId.data.id));// * передаем полученный ID в хранилище
-        console.log(this.state.dataPost.data.id); // TODO полученный ID с сервера
+        console.log(this.state.dataPost.data.id); // * полученный ID с сервера
         console.log(store.getState());
 
         console.log(this.state.dataPost.status); // * полученные данные STATUS с сервера
